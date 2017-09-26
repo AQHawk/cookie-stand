@@ -83,9 +83,9 @@ seatcenter.render();
 
 
 var caphill = {
-  minCust: 11,
+  minCust: 20,
   maxCust: 38,
-  avgCookiePC: 3.7,
+  avgCookiePC: 2.3,
   avg: 0,
   totalCookies: 0,
   getAvg: function() {
@@ -107,3 +107,30 @@ var caphill = {
   }
 };
 caphill.render();
+
+
+var alki = {
+  minCust: 2,
+  maxCust: 16,
+  avgCookiePC: 4.6,
+  avg: 0,
+  totalCookies: 0,
+  getAvg: function() {
+    return Math.floor(Math.random() * (this.maxCust - this.minCust + this.minCust) * (this.avgCookiePC) / 2);
+  },
+  render: function() {
+    for (var i = 0; i < hours.length; i++) {
+      var alkiUl = document.getElementById('alki');
+      var liEl = document.createElement('li');
+      var theAverage = this.getAvg();
+      liEl.textContent = hours[i] + ': ' + theAverage + ' cookies';
+      alkiUl.appendChild(liEl);
+
+      this.totalCookies += theAverage;
+    }
+    var totalEl = document.createElement('li');
+    totalEl.textContent = 'Total: ' + this.totalCookies + ' cookies';
+    alkiUl.appendChild(totalEl);
+  }
+};
+alki.render();
