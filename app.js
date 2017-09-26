@@ -27,3 +27,29 @@ var pike = {
   }
 };
 pike.render();
+
+var seatac = {
+  minCust: 3,
+  maxCust: 24,
+  avgCookiePC: 1.2,
+  avg: 0,
+  totalCookies: 0,
+  getAvg: function() {
+    return Math.floor(Math.random() * (this.maxCust - this.minCust + this.minCust) * (this.avgCookiePC) / 2);
+  },
+  render: function() {
+    for (var i = 0; i < hours.length; i++) {
+      var seatacUl = document.getElementById('seatac');
+      var liEl = document.createElement('li');
+      var theAverage = this.getAvg();
+      liEl.textContent = hours[i] + ': ' + theAverage + ' cookies';
+      seatacUl.appendChild(liEl);
+
+      this.totalCookies += theAverage;
+    }
+    var totalEl = document.createElement('li');
+    totalEl.textContent = 'Total: ' + this.totalCookies + ' cookies';
+    seatacUl.appendChild(totalEl);
+  }
+};
+seatac.render();
