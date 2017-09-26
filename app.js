@@ -80,3 +80,30 @@ var seatcenter = {
   }
 };
 seatcenter.render();
+
+
+var caphill = {
+  minCust: 11,
+  maxCust: 38,
+  avgCookiePC: 3.7,
+  avg: 0,
+  totalCookies: 0,
+  getAvg: function() {
+    return Math.floor(Math.random() * (this.maxCust - this.minCust + this.minCust) * (this.avgCookiePC) / 2);
+  },
+  render: function() {
+    for (var i = 0; i < hours.length; i++) {
+      var caphillUl = document.getElementById('caphill');
+      var liEl = document.createElement('li');
+      var theAverage = this.getAvg();
+      liEl.textContent = hours[i] + ': ' + theAverage + ' cookies';
+      caphillUl.appendChild(liEl);
+
+      this.totalCookies += theAverage;
+    }
+    var totalEl = document.createElement('li');
+    totalEl.textContent = 'Total: ' + this.totalCookies + ' cookies';
+    caphillUl.appendChild(totalEl);
+  }
+};
+caphill.render();
