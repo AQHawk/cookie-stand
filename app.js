@@ -1,136 +1,68 @@
 'use strict';
 
-var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+var allHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 
-var pike = {
-  minCust: 23,
-  maxCust: 65,
-  avgCookiePC: 6.3,
-  avg: 0,
-  totalCookies: 0,
-  getAvg: function() {
-    return Math.floor(Math.random() * (this.maxCust - this.minCust + this.minCust) * (this.avgCookiePC) / 2);
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
-      var pikeUl = document.getElementById('pike');
-      var liEl = document.createElement('li');
+var cookieTable = document.getElementById('cookies');
+
+function Store(location, minCust, maxCust, avgCookiePC) {
+  this.location = location;
+  this.minCust = minCust;
+  this.maxCust = maxCust;
+  this.avgCookiePC = avgCookiePC;
+  this.avg = 0;
+  this.totalCookies = 0;
+  this.getAvg = function() {
+    return Math.floor(Math.random() * (this.maxCust - this.minCust + 1)) + this.minCust;
+  };
+  this.render = function() {
+    var trEl = document.createElement('tr');
+    var tdEl = document.createElement('td');
+    tdEl.textContent = this.location;
+    trEl.appendChild(tdEl);
+
+    for (var i = 0; i < allHours.length; i++) {
+      tdEl = document.createElement('td');
+
+      //creates variable to store average for use in total
       var theAverage = this.getAvg();
-      liEl.textContent = hours[i] + ': ' + theAverage + ' cookies';
-      pikeUl.appendChild(liEl);
-
+      tdEl.textContent = theAverage;
+      trEl.appendChild(tdEl);
       this.totalCookies += theAverage;
     }
-    var totalEl = document.createElement('li');
-    totalEl.textContent = 'Total: ' + this.totalCookies + ' cookies';
-    pikeUl.appendChild(totalEl);
+    // outside the for loop to display total
+    var totalTd = document.createElement('td');
+    totalTd.textContent = this.totalCookies;
+    trEl.appendChild(totalTd);
+    //final step prints whole row to table
+    cookieTable.appendChild(trEl);
+  };
+}
+
+var pike = new Store('1st and Pike', 23, 65, 6.3);
+var seatac = new Store('SeaTac', 3, 24, 1.2);
+var seatcenter = new Store('Seattle Center', 11, 38, 3.7);
+var caphill = new Store('Capitol Hill', 20, 38, 2.3);
+var alki = new Store('Alki', 2, 16, 4.6);
+
+//new function to display header with hours array
+function header(){
+  var trEl = document.createElement('tr');
+  var thEl = document.createElement('th');
+  thEl.textContent = '';
+  trEl.appendChild(thEl);
+
+  for(var i = 0; i < allHours.length; i++){
+    thEl = document.createElement('th');
+    thEl.textContent = allHours[i];
+    trEl.appendChild(thEl);
   }
-};
+  cookieTable.appendChild(trEl);
+}
+
+header();
+
 pike.render();
-
-var seatac = {
-  minCust: 3,
-  maxCust: 24,
-  avgCookiePC: 1.2,
-  avg: 0,
-  totalCookies: 0,
-  getAvg: function() {
-    return Math.floor(Math.random() * (this.maxCust - this.minCust + this.minCust) * (this.avgCookiePC) / 2);
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
-      var seatacUl = document.getElementById('seatac');
-      var liEl = document.createElement('li');
-      var theAverage = this.getAvg();
-      liEl.textContent = hours[i] + ': ' + theAverage + ' cookies';
-      seatacUl.appendChild(liEl);
-
-      this.totalCookies += theAverage;
-    }
-    var totalEl = document.createElement('li');
-    totalEl.textContent = 'Total: ' + this.totalCookies + ' cookies';
-    seatacUl.appendChild(totalEl);
-  }
-};
 seatac.render();
-
-
-var seatcenter = {
-  minCust: 11,
-  maxCust: 38,
-  avgCookiePC: 3.7,
-  avg: 0,
-  totalCookies: 0,
-  getAvg: function() {
-    return Math.floor(Math.random() * (this.maxCust - this.minCust + this.minCust) * (this.avgCookiePC) / 2);
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
-      var seatcenterUl = document.getElementById('seatcenter');
-      var liEl = document.createElement('li');
-      var theAverage = this.getAvg();
-      liEl.textContent = hours[i] + ': ' + theAverage + ' cookies';
-      seatcenterUl.appendChild(liEl);
-
-      this.totalCookies += theAverage;
-    }
-    var totalEl = document.createElement('li');
-    totalEl.textContent = 'Total: ' + this.totalCookies + ' cookies';
-    seatcenterUl.appendChild(totalEl);
-  }
-};
 seatcenter.render();
-
-
-var caphill = {
-  minCust: 20,
-  maxCust: 38,
-  avgCookiePC: 2.3,
-  avg: 0,
-  totalCookies: 0,
-  getAvg: function() {
-    return Math.floor(Math.random() * (this.maxCust - this.minCust + this.minCust) * (this.avgCookiePC) / 2);
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
-      var caphillUl = document.getElementById('caphill');
-      var liEl = document.createElement('li');
-      var theAverage = this.getAvg();
-      liEl.textContent = hours[i] + ': ' + theAverage + ' cookies';
-      caphillUl.appendChild(liEl);
-
-      this.totalCookies += theAverage;
-    }
-    var totalEl = document.createElement('li');
-    totalEl.textContent = 'Total: ' + this.totalCookies + ' cookies';
-    caphillUl.appendChild(totalEl);
-  }
-};
 caphill.render();
-
-
-var alki = {
-  minCust: 2,
-  maxCust: 16,
-  avgCookiePC: 4.6,
-  avg: 0,
-  totalCookies: 0,
-  getAvg: function() {
-    return Math.floor(Math.random() * (this.maxCust - this.minCust + this.minCust) * (this.avgCookiePC) / 2);
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
-      var alkiUl = document.getElementById('alki');
-      var liEl = document.createElement('li');
-      var theAverage = this.getAvg();
-      liEl.textContent = hours[i] + ': ' + theAverage + ' cookies';
-      alkiUl.appendChild(liEl);
-
-      this.totalCookies += theAverage;
-    }
-    var totalEl = document.createElement('li');
-    totalEl.textContent = 'Total: ' + this.totalCookies + ' cookies';
-    alkiUl.appendChild(totalEl);
-  }
-};
 alki.render();
