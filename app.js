@@ -5,8 +5,8 @@ var allHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm'
 var allStores = [];
 var allStoreTotals = [];
 var totalTotal = 0;
-
 var cookieTable = document.getElementById('cookies');
+var newStoreForm = document.getElementById('salmonCookieForm');
 
 function Store(location, minCust, maxCust, avgCookiePC) {
   this.location = location;
@@ -56,8 +56,6 @@ Store.prototype.render = function() {
   cookieTable.appendChild(trEl);
 };
 
-
-
 new Store('1st and Pike', 23, 65, 6.3);
 new Store('SeaTac', 3, 24, 1.2);
 new Store('Seattle Center', 11, 38, 3.7);
@@ -81,11 +79,9 @@ function header(){
 
 function renderTable(){
   for(var i in allStores){
-    console.log('line 84');
     allStores[i].hourlyCookies();
     allStores[i].dailyCookies();
     allStores[i].render();
-    console.log('line 87');
   }
 }
 
@@ -126,19 +122,71 @@ function renderAllTotals() {
   cookieTable.appendChild(trEl);
 }
 
-// for (var i = 0; i < hours.length; i++) {
-//     totalHourlyCookies.push(allStores[0].hourlyCookiesArr[i] + allStores[1].hourlyCookiesArr[i] + allStores[2].hourlyCookiesArr[i] + allStores[3].hourlyCookiesArr[i] + allStores[4].hourlyCookiesArr[i]);
-//   }
-// }
+//----------------------------------------------
+
+function renderFooter(){
+  columnSum();
+  totalTotalSum();
+  renderAllTotals();
+}
+
+
+function newTableRender(){
+  cookieTable.innerHTML = '';
+  // new variables
+  var newStoreName = event.target.inputStoreName.value;
+  var newMinCusts = event.target.inputMinCust.value;
+  var newMaxCusts = event.target.inputMaxCusts.value;
+  var newAvgSales = event.target.inputAvgSales.value;
+
+
+  if (counter === 0){
+    new Store(newStoreName, parseInt(newMinCusts), parseInt(newMaxCusts), parseInt(newAvgSales));
+
+  }
+
+  for (var j = 0; j < allStores.length; j++){
+    renderTable.appendChild(allStores[j].render());
+  }
+}
+
+
+function submitNewStore(event){
+
+  event.preventDefault();
+
+  if (!event.target.inputStoreName.value || !event.target.inputMinCusts.value || !event.target.inputMaxCusts.value || !event.target.inputAvgSales.value ) {
+    return alert('Please fill in all fields!');
+  }
+
+  //FIGURE THIS PART OUT FOR INPUT
+  // var newComment = new Comment(commenter, remark);
+  //
+  // // console.log('Comment by ' + event.target.who.value + ' at ' + Date());
+  //
+  // event.target.who.value = null;
+  // event.target.says.value = null;
+  //
+  // allComments.push(newComment);
+
+
+  header();
+
+  newTableRender();
+
+  renderFooter();
+}
+
+
+
+newStoreForm.addEventListener('submit', submitNewStore);
+
+
+
+//--------------------------------------------
 
 header();
 
 renderTable();
 
-columnSum();
-
-totalTotalSum();
-
-renderAllTotals();
-
-// footer();
+renderFooter();
